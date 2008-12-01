@@ -44,9 +44,13 @@ module Rack
             if k.downcase == "set-cookie"
               res.cookies.concat vs.to_a
             else
-              vs.each { |v|
-                res[k] = v
-              }
+              if defined? vs.each
+                vs.each { |v|
+                  res[k] = v
+                }
+              else
+                res[k] = vs
+              end
             end
           }
           body.each { |part|
